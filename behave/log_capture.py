@@ -150,8 +150,11 @@ class LoggingCapture(BufferingHandler):
         root_logger.addHandler(self)
 
         # capture the level we're interested in
-        self.old_level = root_logger.level
-        root_logger.setLevel(self.level)
+        if root_logger.level > self.level:
+            self.old_level = root_logger.level
+            root_logger.setLevel(self.level)
+        else:
+            self.old_level = None
 
     def abandon(self):
         """Turn off logging capture.
