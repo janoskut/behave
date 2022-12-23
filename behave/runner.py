@@ -570,9 +570,10 @@ class ModelRunner(object):
 
     def __init__(self, config, features=None, step_registry=None):
 
-        self.runner_args = dict()
         if config and config.unknown_args:
             self.runner_args = self.get_parser().parse_args(config.unknown_args)
+        else:
+            self.runner_args = argparse.Namespace()
 
         self.config = config
         self.features = features or []

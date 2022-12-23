@@ -1112,7 +1112,7 @@ class TestRunnerArgs():
     def test_no_runner_args(self):
         config = create_mock_config()
         r = runner.Runner(config)
-        assert len(r.runner_args) == 0
+        assert len(r.runner_args.__dict__) == 0
 
     def test_unsupported_runner_args(self, capsys):
         """The default runner class doesn't provide a specific parser and hence doesn't accept
@@ -1135,6 +1135,6 @@ class TestRunnerArgs():
         config = create_mock_config()
         config.unknown_args = ['--supported-arg', 'value']
         r = TestRunnerArgs.SpecificRunner(config)
-        print(r.runner_args)
         assert 'supported_arg' in r.runner_args
         assert r.runner_args.supported_arg == 'value'
+        assert len(r.runner_args.__dict__) == 1
